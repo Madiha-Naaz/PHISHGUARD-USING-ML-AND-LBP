@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="This website is develop for identify the safety of url.">
+    <meta name="keywords" content="phishing url,phishing,cyber security,machine learning,classifier,python">
+    <meta name="author" content="Madiha, Athifa, Sharafa, Hashfira">
+    <title>Phishing URL Detection</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow: auto;
+        }
+
+        .main-container {
+            width: 100%;
+            max-width: 1200px;
+            display: flex;
+            gap: 30px;
+        }
+
+        .left-panel, .right-panel {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 30px;
+            background: linear-gradient(90deg, #00dbde, #fc00ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-align: center;
+        }
+
+        .input-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 1rem;
+            opacity: 0.8;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 15px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            font-size: 1rem;
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(90deg, #00dbde, #fc00ff);
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: none; /* Hide initially, show via JS */
+        }
+
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 219, 222, 0.2);
+        }
+
+        .danger-button {
+            background: linear-gradient(90deg, #ff4757, #ff6b81);
+        }
+
+        .danger-button:hover {
+            box-shadow: 0 10px 20px rgba(255, 71, 87, 0.2);
+        }
+
+        .result-container {
+            margin-top: 20px;
+        }
+
+        .url-display {
+            color: #ffb347;
+            word-break: break-all;
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+
+        .result-text {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .credits {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 0.8rem;
+            opacity: 0.6;
+        }
+
+        /* Particles animation */
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+
+        @media (max-width: 900px) {
+            .main-container {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="particles-js"></div>
+
+    <div class="main-container">
+        <!-- Left Panel -->
+        <div class="left-panel">
+            <h1>PHISHING URL DETECTION</h1>
+            <form action="/" method="post">
+                <div class="input-group">
+                    <label for="url">Enter URL to analyze:</label>
+                    <input type="text" name="url" id="url" placeholder="https://example.com" required>
+                </div>
+                <button type="submit" style="display:block;">Check Website</button>
+            </form>
+        </div>
+
+        <!-- Right Panel -->
+        <div class="right-panel">
+            <div class="result-container">
+                <div class="url-display">
+                    <a href="{{ url }}" target="_blank">{{ url }}</a>
+                </div>
+                <div id="prediction" class="result-text"></div>
+                <button class="danger-button" id="button2" onclick="window.open('{{url}}')" target="_blank">Proceed at your own risk</button>
+                <button id="button1" onclick="window.open('{{url}}')" target="_blank">Continue</button>
+            </div>
+        </div>
+    </div>
+
+    <p class="credits">Made by Madiha, Athifa, Sharafa, Hashfira</p>
+
+    <!-- Particles.js -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        particlesJS("particles-js", {
+            "particles": {
+                "number": { "value": 80, "density": { "enable": true, "value_area": 800 }},
+                "color": { "value": "#00dbde" },
+                "shape": { "type": "circle" },
+                "opacity": { "value": 0.5 },
+                "size": { "value": 3, "random": true },
+                "line_linked": { "enable": true, "distance": 150, "color": "#ffffff", "opacity": 0.2, "width": 1 },
+                "move": { "enable": true, "speed": 3 }
+            },
+            "interactivity": {
+                "events": {
+                    "onhover": { "enable": true, "mode": "repulse" },
+                    "onclick": { "enable": true, "mode": "push" }
+                },
+                "modes": {
+                    "repulse": { "distance": 100, "duration": 0.4 }
+                }
+            },
+            "retina_detect": true
+        });
+
+        // Flask variable based prediction display
+        let x = '{{xx}}';
+        let num = x*100;
+        if (0<=x && x<0.50){
+            num = 100-num;
+        }
+        let txtx = num.toString();
+        if(x<=1 && x>=0.50){
+            var label = "Website is " + txtx + "% safe to use...";
+            document.getElementById("prediction").innerHTML = label;
+            document.getElementById("button1").style.display="block";
+        }
+        else if (0<=x && x<0.50){
+            var label = "Website is " + txtx + "% unsafe to use...";
+            document.getElementById("prediction").innerHTML = label;
+            document.getElementById("button2").style.display="block";
+        }
+    </script>
+</body>
+</html>
