@@ -58,13 +58,16 @@ Database (if used): MySQL / SQLite
 1. Clone the repository
 
 git clone https://github.com/Madiha-Naaz/PHISHING-DETECTION-USING-ML-AND-LOOPY-BELIEF-PROPOGATION.git
+
 cd PHISHING-DETECTION-USING-ML-AND-LOOPY-BELIEF-PROPOGATION
 
 
 2. Create and activate virtual environment
 
 python -m venv env
-source env/bin/activate   # On Linux/Mac
+
+source env/bin/activate # On Linux/Mac
+
 env\Scripts\activate      # On Windows
 
 
