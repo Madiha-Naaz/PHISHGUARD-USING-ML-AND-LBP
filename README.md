@@ -63,9 +63,9 @@ Database (if used): MySQL / SQLite
 
 1. Clone the repository
 
-git clone https://github.com/Madiha-Naaz/PHISHING-DETECTION-USING-ML-AND-LOOPY-BELIEF-PROPOGATION.git
+git clone https://github.com/Madiha-Naaz/PHISHGUARD-USING-ML-AND-LBP.git
 
-cd PHISHING-DETECTION-USING-ML-AND-LOOPY-BELIEF-PROPOGATION
+cd PHISHGUARD-USING-ML-AND-LBP
 
 
 2. Create and activate virtual environment
